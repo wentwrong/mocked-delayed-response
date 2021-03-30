@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="shortcut icon" href="#" />
+</head>
+<body>
+    <button id="send-request">Send request</button>
+    <div>
+        Elapsed time: <span id="elapsed-time"></span>
+    </div>
+    <div id="response"></div>
+    <div id="error"></div>
+    <script>
+        var sendRequestBtn  = document.getElementById('send-request');
+        var elapsedTimeSpan = document.getElementById('elapsed-time');
+        var errorDiv        = document.getElementById('error');
+        var responseDiv     = document.getElementById('response');
+
+        sendRequestBtn.addEventListener('click', function (){
+            var dateMark = Date.now();
+
+            fetch('/request')
+                .then(res => res.text())
+                .then(body => {
+                    elapsedTimeSpan.textContent = (Date.now() - dateMark).toString();
+                    responseDiv.textContent     = body;
+                })
+            .catch(err => {
+                errorDiv.textContent = err.toString();
+            })
+        })
+    </script>
+</body>
+</html>
